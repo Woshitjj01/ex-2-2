@@ -1,0 +1,80 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Manual Next Slide Test
+      id: manual-next-slide-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Manual Next Slide Test
+        setup-command: npm install cheerio css jsdom
+        command: node tests/nextslide-test.js
+        timeout: 10
+        max-score: 2
+    - name: Manual Previous Slide Test
+      id: manual-previous-slide-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Manual Previous Slide Test
+        setup-command: npm install cheerio css jsdom
+        command: node tests/prevslide-test.js
+        timeout: 5
+        max-score: 2
+    - name: Start Auto Slide Test
+      id: start-auto-slide-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Start Auto Slide Test
+        setup-command: npm install cheerio css jsdom
+        command: node tests/startautoslide-test.js
+        timeout: 5
+        max-score: 2
+    - name: Stop Auto Slide Test
+      id: stop-auto-slide-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Stop Auto Slide Test
+        setup-command: npm install cheerio css
+        command: node tests/stopautoslide-test.js
+        timeout: 5
+        max-score: 2
+    - name: Sticky Nav Bar Test
+      id: sticky-nav-bar-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Sticky Nav Bar Test
+        setup-command: npm install cheerio css
+        command: node tests/stickynav-test.js
+        timeout: 5
+        max-score: 2
+    - name: Form Validation Test
+      id: form-validation-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Form Validation Test
+        setup-command: npm install cheerio css
+        command: node tests/formvalidation-test.js
+        timeout: 5
+        max-score: 4
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        MANUAL-NEXT-SLIDE-TEST_RESULTS: "${{steps.manual-next-slide-test.outputs.result}}"
+        MANUAL-PREVIOUS-SLIDE-TEST_RESULTS: "${{steps.manual-previous-slide-test.outputs.result}}"
+        START-AUTO-SLIDE-TEST_RESULTS: "${{steps.start-auto-slide-test.outputs.result}}"
+        STOP-AUTO-SLIDE-TEST_RESULTS: "${{steps.stop-auto-slide-test.outputs.result}}"
+        STICKY-NAV-BAR-TEST_RESULTS: "${{steps.sticky-nav-bar-test.outputs.result}}"
+        FORM-VALIDATION-TEST_RESULTS: "${{steps.form-validation-test.outputs.result}}"
+      with:
+        runners: manual-next-slide-test,manual-previous-slide-test,start-auto-slide-test,stop-auto-slide-test,sticky-nav-bar-test,form-validation-test

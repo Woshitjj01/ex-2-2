@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Movie UI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>🎥 Ghibli Movie Carousel</header>
+
+  <div class="carousel" id="carousel">
+    <button id="prev" class="arrow" onclick="prevSlide()">&#10094;</button>
+    <button id="next" class="arrow" onclick="nextSlide()">&#10095;</button>
+    <div class="slides" id="slides">
+      <div class="slide card active">
+        <div class="card">
+          <figure>
+            <img src="assets/spiritedaway.jpg" class="poster" alt="Movie 1 Poster" />
+            <video class="trailer" src="assets/spirited-away-trailer.mp4" autoplay muted loop controls></video>
+          </figure>
+          <div class="caption">
+            <h2>Spirited Away</h2>
+            <p>A magical journey into the spirit world.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide card">
+        <div class="card">
+          <figure>
+            <img src="assets/arrietty.webp" class="poster" alt="Movie 2 Poster" />
+            <video class="trailer" src="assets/arrietty-trailer.mp4" autoplay muted loop controls></video>
+          </figure>
+          <div class="caption">
+            <h2>Arrietty</h2>
+            <p>A "little" girl's BIG life</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide card">
+        <div class="card">
+          <figure>
+            <img src="assets/kiki.webp" class="poster" alt="Movie 3 Poster" />
+            <video class="trailer" src="assets/kiki-trailer.mp4" autoplay muted loop controls></video>
+          </figure>
+          <div class="caption">
+            <h2>Kiki's Delivery Service</h2>
+            <p>An enchanting witch grows up</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide card">
+        <div class="card">
+          <figure>
+            <img src="assets/howlscastle.jpg" class="poster" alt="Movie 4 Poster" />
+            <video class="trailer" src="assets/howl-trailer.mp4" autoplay muted loop controls></video>
+          </figure>
+          <div class="caption">
+            <h2>Howl's Moving Castle</h2>
+            <p>Family is what you make of it</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide card">
+        <div class="card">
+          <figure>
+            <img src="assets/myneighbortotoro-still.jpg" class="poster" alt="Movie 5 Poster" />
+            <video class="trailer" src="assets/totoro.jpg" autoplay muted loop controls></video>
+          </figure>
+          <div class="caption">
+            <h2>My Neighbor Totoro</h2>
+            <p>Imagination. Joy. Resilience</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav id="mainNav">
+    <img src="assets/menu-icon.png" id="menuToggle" class="menu-icon" alt="Menu">
+    <ul id="navLinks">
+      <li><a href="#visit">Visit</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#ticket">Ticket</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+<section id="shopping">
+  <div class="shopping-container">
+    <h2>Shop With Us</h2>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search merchandise...">
+    </div>
+    <div class="products-container" id="productsContainer"></div>
+    <div class="cart-section">
+      <button id="checkoutBtn" class="hidden">Checkout</button>
+    </div>
+  </div>
+</section>
+
+<section id="checkout" class="hidden">
+  <div class="checkout-container">
+    <h2>Your Order</h2>
+    <div id="orderSummary"></div>
+    <div class="total-price">
+      <h3>Total: $<span id="totalPrice">0</span></h3>
+    </div>
+    <button id="proceedToPaymentBtn">Proceed to Payment</button>
+  </div>
+</section>
+
+<section id="paymentForm" class="hidden">
+  <div class="form-content">
+    <h2>Payment information</h2>
+    <form id="paymentForm">
+      <div class="form-group">
+        <label for="cardName">Cardholder's Name</label>
+        <input type="text" id="cardName" required>
+      </div>
+      <div class="form-group">
+        <label for="cardNumber">Credit card number</label>
+        <input type="text" id="cardNumber" required>
+      </div>
+      <div class="form-group">
+        <label for="expiryDate">Validity period</label>
+        <input type="text" id="expiryDate" placeholder="MM/YY" required>
+      </div>
+      <div class="form-group">
+        <label for="cvv">CVV</label>
+        <input type="text" id="cvv" required>
+      </div>
+      <div class="form-group">
+        <label for="address">Delivery address</label>
+        <textarea id="address" required></textarea>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Confirm payment">
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="confirmation" class="hidden">
+  <div class="confirmation-container">
+    <h2>Thank You for Your Order!</h2>
+    <div id="orderConfirmation"></div>
+    <button id="backToShoppingBtn">Back to Shopping</button>
+  </div>
+</section>
+
+  <section id="registration">
+    <div class="form-content">
+      <h2>Visit us Ghibli Park</h2>
+      <form id="registrationform">
+        <div class="form-group">
+          <label for="date-of-visit">When would you like to visit us?</label>
+          <input type="date" id="date-of-visit" required />
+          <span id="visitDateError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="no-of-visitors">How many are coming?</label>
+          <select id="no-of-visitors" required>
+            <option value="">---Select---</option>
+            <option value="just_me">Just me</option>
+            <option value="friend_and_me">My friend and I</option>
+            <option value="some_friends">Some of my friend and I (3-4)</option>
+            <option value="family">My family and I (4 or more)</option>
+          </select>
+          <span id="visitorsError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Your Full Name:</label>
+          <input type="text" id="name" required />
+          <span id="nameError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Your Email Address:</label>
+          <input type="email" id="email" required />
+          <span id="emailError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="dob">Date of Birth:</label>
+          <input type="date" id="dob" required />
+          <span id="dobError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+          <label>Gender:</label>
+          <div class="gender-options">
+            <div class="gender-option">
+              <input type="radio" id="male" name="gender" value="male" required>
+              <label for="male">Male</label>
+            </div>
+            <div class="gender-option">
+              <input type="radio" id="female" name="gender" value="female">
+              <label for="female">Female</label>
+            </div>
+          </div>
+          <span id="genderError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="ticket">Ticket Type:</label>
+          <select id="ticket" required>
+            <option value="">---Select---</option>
+            <option value="Standard">Standard</option>
+            <option value="Guided Tour">Guided Tour</option>
+            <option value="Family Package(Guided tour included)">Family Package(Guided tour included)</option>
+          </select>
+          <span id="ticketError" class="error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="comments">Additional Comments:</label>
+          <textarea id="comments" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <input type="submit" value="Register" />
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
